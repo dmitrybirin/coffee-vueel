@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <Chart :width="500" :height="300"/>
-    <Input/>
+    <Input name='chocolate'/>
   </div>
 </template>
 
@@ -22,7 +22,6 @@ export default {
 <style>
 #app {
   display: flex;
-  /* flex-direction: column; */
   align-content: center;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

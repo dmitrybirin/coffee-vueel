@@ -6,17 +6,20 @@
 	max="5"
 	step="1" 
 	orient="vertical"
-	v-model="value"/>
-	<p>{{ value }}</p>
+	@input="(e) => wheel.changeItem(name, e.target.value)"/>
+	<p>{{ wheel[name] }}</p>
 	</div>
 </template>
 
 <script>
+import wheel from '../models/wheel';
+
 export default {
-    name: 'app',
+	name: 'app',
+	props: ['name'],
     data: () => ({
-		value: 0
-    })
+		wheel
+	})
 };
 </script>
 

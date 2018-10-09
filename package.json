@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "chart.js": "^2.7.2",
+    "mobx": "^5.5.0",
+    "mobx-state-tree": "^3.5.0",
     "vue": "^2.5.17",
     "vue-chartjs": "^3.4.0"
   },
