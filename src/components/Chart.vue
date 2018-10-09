@@ -1,18 +1,39 @@
 <script>
 import { Radar } from 'vue-chartjs'
 
+const data = { 
+  'sweet': 0,
+  'sour/tart': 0,
+  'floral': 0,
+  'spicy': 0,
+  'salty': 0,
+  'berry fruit': 0,
+  'citrus fruit': 0,
+  'stone fruit': 0,
+  'chocolate': 0,
+  'caramel': 0,
+  'smoky': 0,
+  'bitter': 0,
+  'savory': 0,
+  'body': 0,
+  'clean': 0,
+  'linger/finish': 0 }
+
+Object.keys(data).map(k => data[k] = Math.floor(Math.random()*5))
+
+
 export default {
   name: 'Chart',
   extends: Radar,
   mounted () {
     // Overwriting base render method with actual data.
     this.renderChart({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      labels: Object.keys(data).map(label => label.toUpperCase()),
       datasets: [
         {
-          label: 'GitHub Commits',
+          label: 'Coffee Wheel',
           backgroundColor: '#64b587',
-          data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+          data: Object.values(data)
         }
       ]
     },  {responsive: false, maintainAspectRatio: true})
