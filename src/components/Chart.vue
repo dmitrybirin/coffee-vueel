@@ -39,8 +39,6 @@ export default {
     },  {responsive: false, maintainAspectRatio: true})
   }
 }
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->Ž

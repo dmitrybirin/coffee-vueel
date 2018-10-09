@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <Chart :width="400" :height="200"/>
+    <Chart :width="500" :height="300"/>
+    <Input/>
   </div>
 </template>
 
 <script>
 import Chart from './components/Chart.vue'
+import Input from './components/Input.vue'
 
 export default {
   name: 'app',
   components: {
-    Chart
+    Chart,
+    Input
   }
 }
 </script>
