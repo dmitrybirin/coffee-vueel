@@ -1,23 +1,26 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Chart :width="400" :height="200"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Chart from './components/Chart.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Chart
   }
 }
 </script>
 
 <style>
 #app {
+  display: flex;
+  /* flex-direction: column; */
+  align-content: center;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -25,4 +28,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
