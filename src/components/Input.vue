@@ -1,13 +1,14 @@
 <template>
-<div>
-  <input 
-	type="range"
-	min="0"
-	max="5"
-	step="1" 
-	orient="vertical"
-	@input="(e) => wheel.changeItem(name, e.target.value)"/>
-	<p>{{ wheel[name] }}</p>
+<div id="container" :style="rotate(false)">
+	<p id="name" :style="rotate(true)">{{ wheel[name] }}</p>
+	<input 
+		class="ray"
+		type="range"
+		min="0"
+		max="5"
+		step="1" 
+		orient="vertical"
+		@input="(e) => wheel.changeItem(name, e.target.value)"/>
 	</div>
 </template>
 
@@ -15,21 +16,33 @@
 import wheel from '../models/wheel';
 
 export default {
-	name: 'app',
-	props: ['name'],
+    name: 'app',
+    props: ['name', 'angle'],
+    methods: {
+        rotate(text) {
+            return `transform: rotate(${text ? '-' : ''}${this.angle}deg) translateX(-100%);`;
+        }
+    },
     data: () => ({
-		wheel
-	})
+        wheel
+    })
 };
 </script>
 
 <style scope>
-input {
-	transform: rotate(45deg);
-    -webkit-appearance: slider-vertical; /* WebKit */
+div#container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    transform-origin: bottom left;
+}
+
+input.ray {
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: slider-vertical;
     width: 8px;
     height: 175px;
-    padding: 0 5px;
 }
 </style>
 

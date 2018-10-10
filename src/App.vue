@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <Chart :width="500" :height="300"/>
-    <Input name='chocolate'/>
+    <!-- <Chart :width="500" :height="300"/> -->
+    <Input name='chocolate' :angle='angle'/>
+    <!-- <Input name='body' angle= '60'/> -->
+    <input @input="e=>{this.angle=e.target.value}" type="number">
   </div>
 </template>
 
@@ -15,7 +17,10 @@ export default {
   components: {
     Chart,
     Input
-  }
+  },
+  data: () => ({
+    angle: 0
+  })
 }
 </script>
 
