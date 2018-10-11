@@ -1,22 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <!-- <Chart :width="500" :height="300"/> -->
-    <Input name='chocolate' :angle='angle'/>
-    <!-- <Input name='body' angle= '60'/> -->
-    <input @input="e=>{this.angle=e.target.value}" type="number">
+    <Clock/>
   </div>
 </template>
 
 <script>
 import Chart from './components/Chart.vue'
+import Clock from './components/Clock.vue'
 import Input from './components/Input.vue'
 
 export default {
   name: 'app',
   components: {
     Chart,
-    Input
+    Input,
+    Clock
   },
   data: () => ({
     angle: 0
