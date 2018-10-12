@@ -8,6 +8,7 @@
 		max="5"
 		step="1" 
 		orient="vertical"
+        value="wheel[name]"
 		@input="(e) => wheel.changeItem(name, e.target.value)"/>
 	</div>
 </template>
@@ -40,8 +41,9 @@ div#container {
 input.ray {
     margin: 0;
     padding: 0;
+    color: blue;
     -webkit-appearance: slider-vertical;
-    width: 8px;
+    width: 1px;
     height: 175px;
 }
 </style>
