@@ -9,9 +9,34 @@ import wheel from '../models/wheel';
 
 export default {
     name: 'Chart',
+    computed: {
+      chartData: () => ({
+                labels: Object.keys(wheel),
+                datasets: [
+                    {
+                        pointStyle: 'circle',
+                        pointRadius: 10,
+                        label: 'coffeewheel',
+                        data: Object.values(wheel)
+                    }
+                ],
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            })
+    },
     data: () => ({
         wheel
     }),
+    beforeUpdate(){console.log(this.chartData)},
     methods: {
         createChart(chartId, chartData) {
             const ctx = document.getElementById(chartId);
@@ -23,14 +48,7 @@ export default {
         }
     },
     mounted() {
-          this.createChart('planet-chart', {data:{
-            labels: Object.keys(this.wheel),
-            datasets: [{
-              pointStyle: 'circle', pointRadius: 10, label: 'coffeewheel',
-              data:Object.values(this.wheel),
-            }]
-
-          }});
+        this.createChart('planet-chart', {data: this.chartData});
     }
 };
 </script>
