@@ -1,29 +1,38 @@
+<template>
+    <canvas id="planet-chart"></canvas>
+</template>
+
 <script>
-import { Radar, mixins } from 'vue-chartjs'
+import Chart from 'chart.js';
+
 import wheel from '../models/wheel';
-const { reactiveProp, reactiveData } = mixins
 
 export default {
-  name: 'Chart',
-  mixins: [reactiveData],
-  extends: Radar,
-  data: () => ({
-    chartData: null
-  }),
-  mounted () {
-    // Overwriting base render method with actual data.
-    this.renderChart({
-      labels: Object.keys(wheel.toJSON()).map(label => label.toUpperCase()),
-      datasets: [
-        {
-          label: 'Coffee Wheel',
-          backgroundColor: '#64b587',
-          data: parseInt(Object.values(wheel.toJSON()))
+    name: 'Chart',
+    data: () => ({
+        wheel
+    }),
+    methods: {
+        createChart(chartId, chartData) {
+            const ctx = document.getElementById(chartId);
+            new Chart(ctx, {
+                type: 'radar',
+                data: chartData.data,
+                options: chartData.options
+            });
         }
-      ]
-    },  {responsive: false, maintainAspectRatio: true})
-  }
-}
+    },
+    mounted() {
+          this.createChart('planet-chart', {data:{
+            labels: Object.keys(this.wheel),
+            datasets: [{
+              pointStyle: 'circle', pointRadius: 10, label: 'coffeewheel',
+              data:Object.values(this.wheel),
+            }]
+
+          }});
+    }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->Ž

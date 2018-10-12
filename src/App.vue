@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <!-- <Chart :width="500" :height="300"/> -->
+    <Chart />
     <!-- <Input name='chocolate' :angle='angle'/> -->
     <!-- <Input name='body' angle= '60'/> -->
     <!-- <input @input="e=>{this.angle=e.target.value}" type="number"> -->
