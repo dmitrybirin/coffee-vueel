@@ -29,11 +29,14 @@ const initData = {
         stepSize: 1
       }
     },
-    events: ['click'],
-    // onClick: (e) => {console.log(e)},
-    onHover: e => {
-      console.log(e);
-    }
+    events: ['mousedown', 'mouseup'],
+    onHover: (e, arr) => {
+        if (e.type === 'mousedown' && arr.length!==0) {
+            console.log('down')
+        } else if (e.type === 'mouseup'){
+            console.log('up')
+        }
+    },
   }
 };
 
