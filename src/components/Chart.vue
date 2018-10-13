@@ -7,6 +7,9 @@ import Chart from 'chart.js';
 
 import wheel from '../models/wheel';
 
+const fillColor = '#ffcb0f';
+const borderColor = '#663c1f'
+
 const initData = {
   data: {
     labels: Object.keys(wheel),
@@ -15,6 +18,10 @@ const initData = {
         pointStyle: 'circle',
         pointRadius: 5,
         label: 'coffeewheel',
+        backgroundColor: fillColor,
+        borderColor: borderColor,
+        pointBackgroundColor: fillColor,
+        pointBorderColor: borderColor,
         data: Object.values(wheel)
       }
     ]
