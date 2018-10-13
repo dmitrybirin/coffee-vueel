@@ -1,63 +1,72 @@
 <template>
-    <canvas id="planet-chart"></canvas>
+    <canvas id='coffee-wheel'></canvas>
 </template>
 
 <script>
-import Chart from "chart.js";
+import Chart from 'chart.js';
 
-import wheel from "../models/wheel";
+import wheel from '../models/wheel';
 
-const options = {
+const initData = {
+  data: {
+    labels: Object.keys(wheel),
+    datasets: [
+      {
+        pointStyle: 'circle',
+        pointRadius: 5,
+        label: 'coffeewheel',
+        data: Object.values(wheel)
+      }
+    ]
+  },
+  options: {
     responsive: true,
     maintainAspectRatio: true,
     scale: {
-        ticks: {
-            max: 5,
-            min: 0,
-            stepSize:1,
-        }
+      ticks: {
+        max: 5,
+        min: 0,
+        stepSize: 1
+      }
+    },
+    events: ['click'],
+    // onClick: (e) => {console.log(e)},
+    onHover: e => {
+      console.log(e);
     }
+  }
 };
 
 export default {
-  name: "Chart",
+  name: 'Chart',
   computed: {
-    chartData: () => ({
-      labels: Object.keys(wheel),
-      datasets: [
-        {
-          pointStyle: "circle",
-          pointRadius: 5,
-          label: "coffeewheel",
-          data: Object.values(wheel)
-        }
-      ]
-    })
+    chartPoints: () => Object.values(wheel)
   },
   watch: {
-    chartData: function(newData) {
-      this.createChart("planet-chart", { data: newData, options });
+    chartPoints: function(newPoints) {
+      this.chart.data.datasets[0].data = newPoints;
+      this.chart.update();
     }
   },
   data: () => ({
-    wheel
+    wheel,
+    chart: null
   }),
   methods: {
     createChart(chartId, chartData) {
       const ctx = document.getElementById(chartId);
-      new Chart(ctx, {
-        type: "radar",
+      this.chart = new Chart(ctx, {
+        type: 'radar',
         data: chartData.data,
         options: chartData.options
       });
-    }
+    },
   },
   mounted() {
-    this.createChart("planet-chart", { data: this.chartData, options });
+    this.createChart('coffee-wheel', initData);
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->Ž
 <style scoped>
 </style>
