@@ -3,53 +3,58 @@
 </template>
 
 <script>
-import Chart from 'chart.js';
+import Chart from "chart.js";
 
-import wheel from '../models/wheel';
+import wheel from "../models/wheel";
+
+const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    scale: {
+        ticks: {
+            max: 5,
+            min: 0,
+            stepSize:1,
+        }
+    }
+};
 
 export default {
-    name: 'Chart',
-    computed: {
-      chartData: () => ({
-                labels: Object.keys(wheel),
-                datasets: [
-                    {
-                        pointStyle: 'circle',
-                        pointRadius: 10,
-                        label: 'coffeewheel',
-                        data: Object.values(wheel)
-                    }
-                ],
-                options: {
-                    scales: {
-                        yAxes: [
-                            {
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }
-                        ]
-                    }
-                }
-            })
-    },
-    data: () => ({
-        wheel
-    }),
-    beforeUpdate(){console.log(this.chartData)},
-    methods: {
-        createChart(chartId, chartData) {
-            const ctx = document.getElementById(chartId);
-            new Chart(ctx, {
-                type: 'radar',
-                data: chartData.data,
-                options: chartData.options
-            });
+  name: "Chart",
+  computed: {
+    chartData: () => ({
+      labels: Object.keys(wheel),
+      datasets: [
+        {
+          pointStyle: "circle",
+          pointRadius: 5,
+          label: "coffeewheel",
+          data: Object.values(wheel)
         }
-    },
-    mounted() {
-        this.createChart('planet-chart', {data: this.chartData});
+      ]
+    })
+  },
+  watch: {
+    chartData: function(newData) {
+      this.createChart("planet-chart", { data: newData, options });
     }
+  },
+  data: () => ({
+    wheel
+  }),
+  methods: {
+    createChart(chartId, chartData) {
+      const ctx = document.getElementById(chartId);
+      new Chart(ctx, {
+        type: "radar",
+        data: chartData.data,
+        options: chartData.options
+      });
+    }
+  },
+  mounted() {
+    this.createChart("planet-chart", { data: this.chartData, options });
+  }
 };
 </script>
 
