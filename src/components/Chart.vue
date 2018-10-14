@@ -24,9 +24,6 @@ const initData = {
         pointBorderColor: borderColor,
         data: Object.values(wheel)
       },
-      {
-        data: Object.values(wheel+1)
-      }
     ]
   },
   options: {
@@ -42,7 +39,7 @@ const initData = {
     // hover: {
     //     intersect: true,
     // },
-    events: ['mousedown', 'mouseup'],
+    events: ['mousedown', 'mouseup', 'mousemove'],
     // onHover: (e, arr) => {
     //     if (e.type === 'mousemove'){
     //         // console.log('MOVED! ', e.movementX)
@@ -106,20 +103,24 @@ export default {
 
         const chartData = arr[0]['_chart'].config.data;
         const idx = arr[0]['_index'];
-        
+        this.drag.idx = arr[0]['_index'];
         this.drag.label = chartData.labels[idx];
-        
-
     }
-    if (e.type === 'mouseup' && this.drag.status) {
-        this.drag.status = false;
-        console.log('done')
+    if (e.type === 'mousemove' && this.drag.status) {
         const scale = this.chart.scale
         const dist = Math.sqrt(Math.pow(scale.xCenter-e.layerX, 2) + Math.pow(scale.yCenter-e.layerY, 2))
-        const value = (dist/this.drag.scalingFactor ) + scale.min        
-        console.log(value)
+        const value = (dist/this.drag.scalingFactor ) + scale.min   
         wheel.changeItem(this.drag.label, String(value))
-      
+    }
+
+    if (e.type === 'mouseup' && this.drag.status) {
+        this.drag.status = false;
+        // const scale = this.chart.scale
+        // const dist = Math.sqrt(Math.pow(scale.xCenter-e.layerX, 2) + Math.pow(scale.yCenter-e.layerY, 2))
+        // const value = (dist/this.drag.scalingFactor ) + scale.min   
+        // // todo need to get working angle one     
+        // // const distangle = Math.round(Math.cos(scale.getIndexAngle(this.drag.idx)))* (scale.xCenter-e.layerX)        
+        // wheel.changeItem(this.drag.label, String(value))
     }
     
     },
