@@ -36,27 +36,7 @@ const initData = {
         stepSize: 1
       },
     },
-    // hover: {
-    //     intersect: true,
-    // },
     events: ['mousedown', 'mouseup', 'mousemove'],
-    // onHover: (e, arr) => {
-    //     if (e.type === 'mousemove'){
-    //         // console.log('MOVED! ', e.movementX)
-    //     }
-
-    //     if (e.type === 'mousedown' && arr.length!==0) {
-    //         console.log('down', e)
-    //         const chartData = arr[0]['_chart'].config.data;
-    //         const idx = arr[0]['_index'];
-    //         const label = chartData.labels[idx];
-    //         const value = chartData.datasets[0].data[idx];
-    //         console.log(`${label}:${value}`)
-    //     } else if (e.type === 'mouseup'){
-    //         // console.log('up', e)
-    //         // console.log(this.scales)
-    //     }
-    // },
   }
 };
 
@@ -78,7 +58,6 @@ export default {
     drag: {
         status: false,
         label: null,
-        scalingFactor: 0,
     },
   }),
   methods: {
@@ -90,39 +69,29 @@ export default {
         options: chartData.options
       });
     },
+    getValueFromPoint(x,y){
+        const scale = this.chart.scale
+        const dist = Math.sqrt(Math.pow(scale.xCenter-x, 2) + Math.pow(scale.yCenter-y, 2))
+        const scalingFactor = scale.drawingArea / (scale.max - scale.min)
+        return (dist/scalingFactor ) + scale.min   
+    },
     handleClick(e, arr){
     
-    console.log('click', e.type)
-    // const elements = this.chart.getElementsAtEvent(e)
-    
     if (e.type === 'mousedown' && arr.length!==0) {
-        console.log('...dragging...')
         this.drag.status = true;
         const scale = this.chart.scale
-        this.drag.scalingFactor = scale.drawingArea / (scale.max - scale.min)
-
+        
         const chartData = arr[0]['_chart'].config.data;
         const idx = arr[0]['_index'];
-        this.drag.idx = arr[0]['_index'];
         this.drag.label = chartData.labels[idx];
     }
     if (e.type === 'mousemove' && this.drag.status) {
-        const scale = this.chart.scale
-        const dist = Math.sqrt(Math.pow(scale.xCenter-e.layerX, 2) + Math.pow(scale.yCenter-e.layerY, 2))
-        const value = (dist/this.drag.scalingFactor ) + scale.min   
-        wheel.changeItem(this.drag.label, String(value))
+        wheel.changeItem(this.drag.label, String(this.getValueFromPoint(e.layerX, e.layerY)))
     }
 
     if (e.type === 'mouseup' && this.drag.status) {
         this.drag.status = false;
-        // const scale = this.chart.scale
-        // const dist = Math.sqrt(Math.pow(scale.xCenter-e.layerX, 2) + Math.pow(scale.yCenter-e.layerY, 2))
-        // const value = (dist/this.drag.scalingFactor ) + scale.min   
-        // // todo need to get working angle one     
-        // // const distangle = Math.round(Math.cos(scale.getIndexAngle(this.drag.idx)))* (scale.xCenter-e.layerX)        
-        // wheel.changeItem(this.drag.label, String(value))
     }
-    
     },
   },
   mounted() {
