@@ -70,8 +70,14 @@ export default {
         options: chartData.options
       });
     },
+    rangeValue(value){
+        const { max, min } = this.chart.scale
+        if (value > max) return max
+        if (value < min) return min
+        return value
+    },
     getValueFromPoint(x,y){
-        const scale = this.chart.scale
+        const { scale } = this.chart
         const angleRad = scale.getIndexAngle(this.drag.idx)
         const angle = angleRad * 180/ Math.PI
         let dist;
@@ -82,13 +88,14 @@ export default {
         }
         
         const scalingFactor = scale.drawingArea / (scale.max - scale.min)
-        return dist < 0 ? 0 : (dist/scalingFactor ) + scale.min   
+        const value = (dist/scalingFactor ) + scale.min
+        return this.rangeValue(value)
     },
     handleClick(e, arr){
     
     if (e.type === 'mousedown' && arr.length!==0) {
         this.drag.status = true;
-        const scale = this.chart.scale
+        const { scale } = this.chart
         
         const chartData = arr[0]['_chart'].config.data;
         this.drag.idx = arr[0]['_index'];
@@ -100,6 +107,10 @@ export default {
 
     if (e.type === 'mouseup' && this.drag.status) {
         this.drag.status = false;
+        
+        const roundedValue = Math.round(this.wheel[this.drag.label])
+        this.wheel.changeItem(this.drag.label, String(roundedValue))
+        
     }
     },
   },
