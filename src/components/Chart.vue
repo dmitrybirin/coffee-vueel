@@ -58,6 +58,7 @@ export default {
     drag: {
         status: false,
         label: null,
+        idx: 0,
     },
   }),
   methods: {
@@ -71,9 +72,17 @@ export default {
     },
     getValueFromPoint(x,y){
         const scale = this.chart.scale
-        const dist = Math.sqrt(Math.pow(scale.xCenter-x, 2) + Math.pow(scale.yCenter-y, 2))
+        const angleRad = scale.getIndexAngle(this.drag.idx)
+        const angle = angleRad * 180/ Math.PI
+        let dist;
+        if (angleRad === Math.PI/2 || angleRad === 3*Math.PI/2) {
+          dist = (x-scale.xCenter)/Math.sin(angleRad)
+        } else {
+          dist = (scale.yCenter-y)/Math.cos(angleRad)
+        }
+        
         const scalingFactor = scale.drawingArea / (scale.max - scale.min)
-        return (dist/scalingFactor ) + scale.min   
+        return dist < 0 ? 0 : (dist/scalingFactor ) + scale.min   
     },
     handleClick(e, arr){
     
@@ -82,8 +91,8 @@ export default {
         const scale = this.chart.scale
         
         const chartData = arr[0]['_chart'].config.data;
-        const idx = arr[0]['_index'];
-        this.drag.label = chartData.labels[idx];
+        this.drag.idx = arr[0]['_index'];
+        this.drag.label = chartData.labels[this.drag.idx];
     }
     if (e.type === 'mousemove' && this.drag.status) {
         wheel.changeItem(this.drag.label, String(this.getValueFromPoint(e.layerX, e.layerY)))
