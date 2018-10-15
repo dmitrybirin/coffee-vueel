@@ -7,8 +7,8 @@ import Chart from "chart.js";
 
 import wheel from "../models/wheel";
 
-const fillColor = "#ffcb0f";
-const borderColor = "#663c1f";
+const fillColor = "rgb(255, 203, 15, 0.4)";
+const borderColor = "rgb(255, 199, 0)";
 
 const initData = {
   data: {
@@ -37,15 +37,15 @@ const initData = {
       }
     },
     tooltips: {
-        // enabled: false,
-    },    
-    elements: {
-        point: {
-            radius: 2,
-            hoverRadius: 10
-        },
+      // enabled: false,
     },
-    
+    elements: {
+      point: {
+        radius: 2,
+        hoverRadius: 10
+      }
+    },
+
     events: ["mousedown", "mouseup", "mousemove"]
   }
 };
