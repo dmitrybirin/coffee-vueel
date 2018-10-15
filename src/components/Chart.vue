@@ -113,7 +113,7 @@ export default {
       if (e.type === "mousemove" && this.drag.status) {
         wheel.changeItem(
           this.drag.label,
-          String(this.getValueFromPoint(e.layerX, e.layerY))
+          this.getValueFromPoint(e.layerX, e.layerY)
         );
       }
 
@@ -121,7 +121,7 @@ export default {
         this.drag.status = false;
 
         const roundedValue = Math.round(this.wheel[this.drag.label]);
-        this.wheel.changeItem(this.drag.label, String(roundedValue));
+        this.wheel.changeItem(this.drag.label, roundedValue);
       }
     }
   },
