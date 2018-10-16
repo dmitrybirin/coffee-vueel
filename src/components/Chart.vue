@@ -50,10 +50,12 @@ const initData = {
     }
 };
 
+const Pi = Math.PI;
+
 export default {
     name: 'Chart',
     computed: {
-        chartPoints: () => Object.values(wheel),
+        chartPoints: () => Object.values(wheel)
     },
     watch: {
         chartPoints: function(newPoints) {
@@ -65,7 +67,7 @@ export default {
     data: () => ({
         wheel,
         chart: null,
-        current:{
+        current: {
             drag: false,
             label: null,
             idx: 0
@@ -91,9 +93,9 @@ export default {
         getValueFromPoint(x, y) {
             const { scale } = this.chart;
             const angleRad = scale.getIndexAngle(this.current.idx);
-            const angle = (angleRad * 180) / Math.PI;
+            const angle = (angleRad * 180) / Pi;
             let dist;
-            if (angleRad === Math.PI / 2 || angleRad === (3 * Math.PI) / 2) {
+            if (angleRad === Pi / 2 || angleRad === (3 * Pi) / 2) {
                 dist = (x - scale.xCenter) / Math.sin(angleRad);
             } else {
                 dist = (scale.yCenter - y) / Math.cos(angleRad);
@@ -103,47 +105,51 @@ export default {
             const value = dist / scalingFactor + scale.min;
             return this.rangeValue(value);
         },
-        handleClick(e, arr) {
-            if (e.type === 'mousedown' && arr.length === 0) {
+        clicking(e, arr) {
+              if (e.type === 'mousedown' && arr.length === 0) {
                 const { scale } = this.chart;
-                
-                // calculating rad for X and Y
-                let angle 
-                if (scale.yCenter-e.layerY >0){
-                 angle = Math.atan2(
-                    scale.yCenter-e.layerY,
-                    e.layerX-scale.xCenter
-                )
-                } else {
-                  angle = Math.atan2(
-                    scale.yCenter-e.layerY,
-                    e.layerX-scale.xCenter)+2*Math.PI
-                } 
-                // converting angle: invert and move zero
-                const convertedAngle = ((2*Math.PI - angle)+Math.PI/2) % (2*Math.PI)
-                if (convertedAngle > (2*Math.PI - Math.PI/this.dataAngles.length)) {
-                    this.current.idx = 0
-                } else {
-                  const angleDiff = this.dataAngles.map(da => Math.abs(da.angle - convertedAngle))
-                  let index = angleDiff.indexOf(Math.min(...angleDiff))
-                  this.current.idx = index;
-                }
 
-                
+                // calculating rad for X and Y
+                let angle;
+                if (scale.yCenter - e.layerY > 0) {
+                    angle = Math.atan2(
+                        scale.yCenter - e.layerY,
+                        e.layerX - scale.xCenter
+                    );
+                } else {
+                    angle =
+                        Math.atan2(
+                            scale.yCenter - e.layerY,
+                            e.layerX - scale.xCenter
+                        ) +
+                        2 * Pi;
+                }
+                // converting angle: invert and move zero
+                const convertedAngle =
+                    (2 * Pi - angle + Pi / 2) % (2 * Pi);
+                if (
+                    convertedAngle >
+                    2 * Pi - Pi / this.dataAngles.length
+                ) {
+                    this.current.idx = 0;
+                } else {
+                    const angleDiff = this.dataAngles.map(da =>
+                        Math.abs(da - convertedAngle)
+                    );
+                    let index = angleDiff.indexOf(Math.min(...angleDiff));
+                    this.current.idx = index;
+                }
             }
 
-             if (e.type === 'mouseup' && !this.current.drag) {
-                  
-                  console.log(this.current.idx)
-                  console.log(this.dataLabels)
-
-                  wheel.changeItem(
+            if (e.type === 'mouseup' && !this.current.drag) {
+                wheel.changeItem(
                     this.dataLabels[this.current.idx],
                     Math.round(this.getValueFromPoint(e.layerX, e.layerY))
                 );
             }
-
-            if (e.type === 'mousedown' && arr.length !== 0) {
+        },
+        dragging (e, arr) {
+                      if (e.type === 'mousedown' && arr.length !== 0) {
                 this.current.drag = true;
                 const { scale } = this.chart;
                 this.current.idx = arr[0]['_index'];
@@ -157,21 +163,24 @@ export default {
 
             if (e.type === 'mouseup' && this.current.drag) {
                 this.current.drag = false;
-                const label = this.dataLabels[this.current.idx]
+                const label = this.dataLabels[this.current.idx];
                 const roundedValue = Math.round(this.wheel[label]);
                 this.wheel.changeItem(label, roundedValue);
             }
+        },
+        handleClick(e, arr) {
+          this.clicking(e, arr)
+          this.dragging(e, arr)
         }
     },
     mounted() {
         initData.options.onHover = this.handleClick;
 
         this.createChart('coffee-wheel', initData);
-        this.dataLabels = this.chart.config.data.labels 
-        this.dataAngles = this.dataLabels.map((label,idx) => ({
-          angle: this.chart.scale.getIndexAngle(idx),
-          label
-        })) 
+        this.dataLabels = this.chart.config.data.labels;
+        this.dataAngles = this.dataLabels.map((label, idx) =>
+            this.chart.scale.getIndexAngle(idx)
+        );
     }
 };
 </script>
