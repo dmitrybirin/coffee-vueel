@@ -1,5 +1,7 @@
 <template>
-    <canvas id='coffee-wheel'></canvas>
+    <div id='container'>
+        <canvas id='coffee-wheel'></canvas>
+    </div>
 </template>
 
 <script>
@@ -27,17 +29,17 @@ const initData = {
         ]
     },
     options: {
+        legend: {
+            display: false
+        },
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scale: {
             ticks: {
                 max: 5,
                 min: 0,
                 stepSize: 1
             }
-        },
-        tooltips: {
-            // enabled: false,
         },
         elements: {
             point: {
@@ -186,4 +188,9 @@ export default {
 </script>
 
 <style scoped>
+div#container {
+    position: relative;
+    width: 80vw;
+    height: 90vh;
+}
 </style>
