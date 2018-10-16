@@ -70,6 +70,9 @@ export default {
             label: null,
             idx: 0
         },
+        click: {
+          label: null,
+        },
         dataAngles: []
     }),
     methods: {
@@ -109,29 +112,28 @@ export default {
                 
                 // calculating rad for X and Y
                 let angle 
-                if (scale.yCenter-e.layerY >0){
                  angle = Math.atan2(
                     scale.yCenter-e.layerY,
                     e.layerX-scale.xCenter
                 )
-                } else {
-                  angle = Math.atan2(
-                    scale.yCenter-e.layerY,
-                    e.layerX-scale.xCenter)+2*Math.PI
-                } 
-                
                 // converting angle: invert and move zero
                 const convertedAngle = ((2*Math.PI - angle)+Math.PI/2) % (2*Math.PI)
                 const angleDiff = this.dataAngles.map(da => (da + (Math.PI/2-convertedAngle))%(Math.PI*2)).map(da => Math.abs(da - Math.PI/2))
-                const index = this.dataAngles.indexOf(Math.min(...angleDiff))
-                console.log(angleDiff)
-                console.log(Object.keys(wheel)[index])
+                let index = angleDiff.indexOf(Math.min(...angleDiff))
+                if (index === this.dataAngles.length - 1) {
+                    index = 0;
+                }
+                const chartData = this.chart.config.data;
+                this.drag.idx = index;
+                this.drag.label = chartData.labels[index];
 
             }
 
              if (e.type === 'mouseup' && arr.length === 0) {
-
-                
+                  wheel.changeItem(
+                    this.drag.label,
+                    Math.round(this.getValueFromPoint(e.layerX, e.layerY))
+                );
             }
 
             if (e.type === 'mousedown' && arr.length !== 0) {
@@ -161,9 +163,11 @@ export default {
         initData.options.onHover = this.handleClick;
 
         this.createChart('coffee-wheel', initData);
-        this.dataAngles = [...Array(Object.keys(this.wheel).length).keys()].map(
+        this.dataAngles = [...
+          [...Array(Object.keys(this.wheel).length).keys()].map(
             index => this.chart.scale.getIndexAngle(index)
-        );
+        ),
+        2*Math.PI];
         console.log(this.dataAngles);
     }
 };
