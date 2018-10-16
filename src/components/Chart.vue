@@ -50,7 +50,6 @@ const initData = {
     }
 };
 
-
 export default {
     name: 'Chart',
     computed: {
@@ -66,6 +65,13 @@ export default {
     data: () => ({
         wheel,
         chart: null,
+        current:{
+            drag: false,
+            label: null,
+            idx: 0
+        },
+        dataLabels: [],
+        dataAngles: []
     }),
     methods: {
         createChart(chartId, chartData) {
