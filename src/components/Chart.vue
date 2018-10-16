@@ -53,7 +53,7 @@ const initData = {
 export default {
     name: 'Chart',
     computed: {
-        chartPoints: () => Object.values(wheel)
+        chartPoints: () => Object.values(wheel),
     },
     watch: {
         chartPoints: function(newPoints) {
@@ -65,13 +65,10 @@ export default {
     data: () => ({
         wheel,
         chart: null,
-        drag: {
-            status: false,
+        current:{
+            drag: false,
             label: null,
             idx: 0
-        },
-        click: {
-          label: null,
         },
         dataAngles: []
     }),
@@ -83,6 +80,8 @@ export default {
                 data: chartData.data,
                 options: chartData.options
             });
+            this.chartLabels = this.chart.config.data.labels
+
         },
         rangeValue(value) {
             const { max, min } = this.chart.scale;
@@ -92,7 +91,7 @@ export default {
         },
         getValueFromPoint(x, y) {
             const { scale } = this.chart;
-            const angleRad = scale.getIndexAngle(this.drag.idx);
+            const angleRad = scale.getIndexAngle(this.current.idx);
             console.log(angleRad)
             const angle = (angleRad * 180) / Math.PI;
             let dist;
@@ -123,39 +122,34 @@ export default {
                 if (index === this.dataAngles.length - 1) {
                     index = 0;
                 }
-                const chartData = this.chart.config.data;
-                this.drag.idx = index;
-                this.drag.label = chartData.labels[index];
+                this.current.idx = index;
 
             }
 
              if (e.type === 'mouseup' && arr.length === 0) {
                   wheel.changeItem(
-                    this.drag.label,
+                    this.chartLabels[this.current.idx],
                     Math.round(this.getValueFromPoint(e.layerX, e.layerY))
                 );
             }
 
             if (e.type === 'mousedown' && arr.length !== 0) {
-                this.drag.status = true;
+                this.current.drag = true;
                 const { scale } = this.chart;
-
-                const chartData = arr[0]['_chart'].config.data;
-                this.drag.idx = arr[0]['_index'];
-                this.drag.label = chartData.labels[this.drag.idx];
+                this.current.idx = arr[0]['_index'];
             }
-            if (e.type === 'mousemove' && this.drag.status) {
+            if (e.type === 'mousemove' && this.current.drag) {
                 wheel.changeItem(
-                    this.drag.label,
+                    this.chartLabels[this.current.idx],
                     this.getValueFromPoint(e.layerX, e.layerY)
                 );
             }
 
-            if (e.type === 'mouseup' && this.drag.status) {
-                this.drag.status = false;
+            if (e.type === 'mouseup' && this.current.drag) {
+                this.current.drag = false;
 
-                const roundedValue = Math.round(this.wheel[this.drag.label]);
-                this.wheel.changeItem(this.drag.label, roundedValue);
+                const roundedValue = Math.round(this.wheel[this.current.label]);
+                this.wheel.changeItem(this.current.label, roundedValue);
             }
         }
     },
