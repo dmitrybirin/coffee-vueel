@@ -50,6 +50,7 @@ const initData = {
     }
 };
 
+
 export default {
     name: 'Chart',
     computed: {
@@ -65,12 +66,6 @@ export default {
     data: () => ({
         wheel,
         chart: null,
-        current:{
-            drag: false,
-            label: null,
-            idx: 0
-        },
-        dataAngles: []
     }),
     methods: {
         createChart(chartId, chartData) {
@@ -80,8 +75,6 @@ export default {
                 data: chartData.data,
                 options: chartData.options
             });
-            this.chartLabels = this.chart.config.data.labels
-
         },
         rangeValue(value) {
             const { max, min } = this.chart.scale;
@@ -92,7 +85,6 @@ export default {
         getValueFromPoint(x, y) {
             const { scale } = this.chart;
             const angleRad = scale.getIndexAngle(this.current.idx);
-            console.log(angleRad)
             const angle = (angleRad * 180) / Math.PI;
             let dist;
             if (angleRad === Math.PI / 2 || angleRad === (3 * Math.PI) / 2) {
@@ -111,24 +103,36 @@ export default {
                 
                 // calculating rad for X and Y
                 let angle 
+                if (scale.yCenter-e.layerY >0){
                  angle = Math.atan2(
                     scale.yCenter-e.layerY,
                     e.layerX-scale.xCenter
                 )
+                } else {
+                  angle = Math.atan2(
+                    scale.yCenter-e.layerY,
+                    e.layerX-scale.xCenter)+2*Math.PI
+                } 
                 // converting angle: invert and move zero
                 const convertedAngle = ((2*Math.PI - angle)+Math.PI/2) % (2*Math.PI)
-                const angleDiff = this.dataAngles.map(da => (da + (Math.PI/2-convertedAngle))%(Math.PI*2)).map(da => Math.abs(da - Math.PI/2))
-                let index = angleDiff.indexOf(Math.min(...angleDiff))
-                if (index === this.dataAngles.length - 1) {
-                    index = 0;
+                if (convertedAngle > (2*Math.PI - Math.PI/this.dataAngles.length)) {
+                    this.current.idx = 0
+                } else {
+                  const angleDiff = this.dataAngles.map(da => Math.abs(da.angle - convertedAngle))
+                  let index = angleDiff.indexOf(Math.min(...angleDiff))
+                  this.current.idx = index;
                 }
-                this.current.idx = index;
 
+                
             }
 
-             if (e.type === 'mouseup' && arr.length === 0) {
+             if (e.type === 'mouseup' && !this.current.drag) {
+                  
+                  console.log(this.current.idx)
+                  console.log(this.dataLabels)
+
                   wheel.changeItem(
-                    this.chartLabels[this.current.idx],
+                    this.dataLabels[this.current.idx],
                     Math.round(this.getValueFromPoint(e.layerX, e.layerY))
                 );
             }
@@ -140,16 +144,16 @@ export default {
             }
             if (e.type === 'mousemove' && this.current.drag) {
                 wheel.changeItem(
-                    this.chartLabels[this.current.idx],
+                    this.dataLabels[this.current.idx],
                     this.getValueFromPoint(e.layerX, e.layerY)
                 );
             }
 
             if (e.type === 'mouseup' && this.current.drag) {
                 this.current.drag = false;
-
-                const roundedValue = Math.round(this.wheel[this.current.label]);
-                this.wheel.changeItem(this.current.label, roundedValue);
+                const label = this.dataLabels[this.current.idx]
+                const roundedValue = Math.round(this.wheel[label]);
+                this.wheel.changeItem(label, roundedValue);
             }
         }
     },
@@ -157,12 +161,11 @@ export default {
         initData.options.onHover = this.handleClick;
 
         this.createChart('coffee-wheel', initData);
-        this.dataAngles = [...
-          [...Array(Object.keys(this.wheel).length).keys()].map(
-            index => this.chart.scale.getIndexAngle(index)
-        ),
-        2*Math.PI];
-        console.log(this.dataAngles);
+        this.dataLabels = this.chart.config.data.labels 
+        this.dataAngles = this.dataLabels.map((label,idx) => ({
+          angle: this.chart.scale.getIndexAngle(idx),
+          label
+        })) 
     }
 };
 </script>
