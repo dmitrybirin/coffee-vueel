@@ -30,15 +30,25 @@ const initData = {
     },
     options: {
         legend: {
-            display: false
+            display: false,
+        },
+        tooltips: {
+            enabled: false
         },
         responsive: true,
         maintainAspectRatio: false,
         scale: {
+            pointLabels :{
+               fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
+               fontStyle: "italic",
+               fontSize: 20,
+               padding: 20,
+            },
             ticks: {
                 max: 5,
                 min: 0,
-                stepSize: 1
+                stepSize: 1,
+                fontSize: 15
             }
         },
         elements: {
@@ -178,7 +188,7 @@ export default {
 <style scoped>
 div#container {
     position: relative;
-    width: 80vw;
     height: 90vh;
+    width:80vw;
 }
 </style>
