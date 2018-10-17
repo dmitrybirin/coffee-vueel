@@ -9,8 +9,8 @@ import Chart from 'chart.js';
 
 import wheel from '../models/wheel';
 
-const fillColor = "rgb(255, 203, 15, 0.4)";
-const borderColor = "rgb(255, 199, 0)";
+const fillColor = 'rgb(255, 203, 15, 0.4)';
+const borderColor = 'rgb(255, 199, 0)';
 
 const initData = {
     data: {
@@ -86,16 +86,9 @@ export default {
                 options: chartData.options
             });
         },
-        rangeValue(value) {
-            const { max, min } = this.chart.scale;
-            if (value > max) return max;
-            if (value < min) return min;
-            return value;
-        },
         getValueFromPoint(x, y) {
             const { scale } = this.chart;
             const angleRad = scale.getIndexAngle(this.current.idx);
-            const angle = (angleRad * 180) / Pi;
             let dist;
             if (angleRad === Pi / 2 || angleRad === (3 * Pi) / 2) {
                 dist = (x - scale.xCenter) / Math.sin(angleRad);
@@ -105,44 +98,42 @@ export default {
 
             const scalingFactor = scale.drawingArea / (scale.max - scale.min);
             const value = dist / scalingFactor + scale.min;
-            return this.rangeValue(value);
+
+            const { max, min } = scale;
+            if (value > max) return max;
+            if (value < min) return min;
+            return value;
         },
-        clicking(e, arr) {
-              if (e.type === 'mousedown' && arr.length === 0) {
-                const { scale } = this.chart;
+        getAngleFromCords(x, y) {
+            const { scale } = this.chart;
+            const x0 = scale.xCenter;
+            const y0 = scale.yCenter;
 
-                // calculating rad for X and Y
-                let angle;
-                if (scale.yCenter - e.layerY > 0) {
-                    angle = Math.atan2(
-                        scale.yCenter - e.layerY,
-                        e.layerX - scale.xCenter
-                    );
-                } else {
-                    angle =
-                        Math.atan2(
-                            scale.yCenter - e.layerY,
-                            e.layerX - scale.xCenter
-                        ) +
-                        2 * Pi;
-                }
-                // converting angle: invert and move zero
-                const convertedAngle =
-                    (2 * Pi - angle + Pi / 2) % (2 * Pi);
-                if (
-                    convertedAngle >
-                    2 * Pi - Pi / this.dataAngles.length
-                ) {
-                    this.current.idx = 0;
-                } else {
-                    const angleDiff = this.dataAngles.map(da =>
-                        Math.abs(da - convertedAngle)
-                    );
-                    let index = angleDiff.indexOf(Math.min(...angleDiff));
-                    this.current.idx = index;
-                }
+            // calculating rad for X and Y
+            let angle;
+            if (scale.yCenter - y > 0) {
+                angle = Math.atan2(y0 - y, x - x0);
+            } else {
+                angle = Math.atan2(y0 - y, x - x0) + 2 * Pi;
             }
-
+            // converting angle: invert and move zero
+            return (2 * Pi - angle + Pi / 2) % (2 * Pi);
+        },
+        getIndexFromAngle(angle) {
+            if (angle > 2 * Pi - Pi / this.dataAngles.length) {
+                return 0;
+            } else {
+                const angleDiff = this.dataAngles.map(da =>
+                    Math.abs(da - angle)
+                );
+                return angleDiff.indexOf(Math.min(...angleDiff));
+            }
+        },
+        handleClicking(e, arr) {
+            if (e.type === 'mousedown' && arr.length === 0) {
+                const angle = this.getAngleFromCords(e.layerX, e.layerY);
+                this.current.idx = this.getIndexFromAngle(angle);
+            }
             if (e.type === 'mouseup' && !this.current.drag) {
                 wheel.changeItem(
                     this.dataLabels[this.current.idx],
@@ -150,10 +141,9 @@ export default {
                 );
             }
         },
-        dragging (e, arr) {
-                      if (e.type === 'mousedown' && arr.length !== 0) {
+        hangdleDragging(e, arr) {
+            if (e.type === 'mousedown' && arr.length !== 0) {
                 this.current.drag = true;
-                const { scale } = this.chart;
                 this.current.idx = arr[0]['_index'];
             }
             if (e.type === 'mousemove' && this.current.drag) {
@@ -162,21 +152,19 @@ export default {
                     this.getValueFromPoint(e.layerX, e.layerY)
                 );
             }
-
             if (e.type === 'mouseup' && this.current.drag) {
                 this.current.drag = false;
                 const label = this.dataLabels[this.current.idx];
                 const roundedValue = Math.round(this.wheel[label]);
                 this.wheel.changeItem(label, roundedValue);
             }
-        },
-        handleClick(e, arr) {
-          this.clicking(e, arr)
-          this.dragging(e, arr)
         }
     },
     mounted() {
-        initData.options.onHover = this.handleClick;
+        initData.options.onHover = (e, arr) => {
+            this.handleClicking(e, arr);
+            this.hangdleDragging(e, arr);
+        };
 
         this.createChart('coffee-wheel', initData);
         this.dataLabels = this.chart.config.data.labels;
