@@ -2,14 +2,14 @@ import { types } from 'mobx-state-tree';
 
 const Cup = types.model({
 	title: types.string,
-	date: types.Date,
+	timestamp: types.string,
 	description: types.string,
 }).actions(self => ({
 	changeTitle(newTitle) {
 		self.title = newTitle
 	},
 	changeDate(newDate) {
-		self.date = newDate
+		self.timestamp = newDate
 	},
 	changeDescription(newDesc) {
 		self.description = newDesc
@@ -18,7 +18,7 @@ const Cup = types.model({
 
 const cup = Cup.create({
 	title:'',
-	date: new Date,
+	timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
 	description:'',
 })
 

@@ -24,7 +24,7 @@ export default {
     }),
     methods: {
         sendCup: () => {
-			model.cup.changeDate(new Date());
+			model.cup.changeDate(new Date().toISOString().slice(0, 19).replace('T', ' '))
 			
             fetch(`${process.env.serverEndpoint || 'http://localhost:3000'}/coffee`, {
                 method: 'POST',
