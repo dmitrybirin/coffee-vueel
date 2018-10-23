@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 const Cup = types.model({
+	// id: types.optional(types.identifier),
 	title: types.string,
 	timestamp: types.string,
 	description: types.string,
@@ -16,10 +17,4 @@ const Cup = types.model({
 	}
 }))
 
-const cup = Cup.create({
-	title:'',
-	timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
-	description:'',
-})
-
-export default cup;
+export default Cup;
