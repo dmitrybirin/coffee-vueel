@@ -11,6 +11,7 @@
     "chart.js": "^2.7.2",
     "mobx": "^5.5.0",
     "mobx-state-tree": "^3.5.0",
+    "uuid": "^3.3.2",
     "vue": "^2.5.17"
   },
   "devDependencies": {

@@ -5,8 +5,8 @@
 				id="title"
 				placeholder="name your coffee"
 				type="text" 
-				@value="coffee.cup.title"
-				@input="e => coffee.cup.changeTitle(e.target.value)"
+				@value="cup.title"
+				@input="e => cup.changeTitle(e.target.value)"
 			/>
 			<label for="title">Name your coffee</label>
 		</div>
@@ -15,17 +15,17 @@
 </template>
 
 <script>
-import coffee from '../models';
+import cup from '../models';
 
 export default {
     name: 'Description',
     data: () => ({
-		coffee
+		cup
     }),
     methods: {
         sendCup: () => {
-            coffee.cup.changeDate(new Date().toISOString().slice(0, 19).replace('T', ' '))
-            coffee.send()
+            cup.changeDate(new Date().toISOString().slice(0, 19).replace('T', ' '))
+            cup.send()
         }
     }
 };
