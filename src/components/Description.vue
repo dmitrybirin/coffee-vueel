@@ -59,6 +59,7 @@ input#title:placeholder-shown + label {
 }
 
 input#title::placeholder {
+    text-align: center;
     font-size: 30px;
     padding: 5px;
     padding-top: 10px;
@@ -71,14 +72,22 @@ input#title {
 }
 
 button {
+    font-size: 14px;
+    justify-content: center;
+    min-height: 32px;
+    min-width: 32px;
+    transition: all .2s ease-in-out;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgb(255, 199, 0.8);
+    border: 'none';
 	color: black;
-	font-size: 20px;
-	border: none;
 	border-radius: 10%;
-	background-color: rgb(255, 203, 15, 0.4);
 }
 
 button:hover {
-	background-color: rgb(255, 199, 0);
+	opacity: 0.6;
 }
 </style>
