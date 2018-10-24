@@ -2,6 +2,7 @@ import uuidv4 from 'uuid/v4';
 
 import Wheel from './wheel'
 import Cup from './cup'
+import CupList from './cuplist'
 
 const cup = Cup.create({
 	id: uuidv4(),
@@ -29,4 +30,8 @@ const cup = Cup.create({
 		'linger/finish': 1 })
 })
 
-export default cup
+const cups = CupList.create({
+	items:[]
+})
+
+export { cup, cups }

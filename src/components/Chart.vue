@@ -7,9 +7,9 @@
 <script>
 import Chart from 'chart.js';
 
-import coffee from '../models';
+import { cup } from '../models';
 
-const wheel = coffee.wheel
+const wheel = cup.wheel
 
 const fillColor = 'rgb(255, 203, 15, 0.4)';
 const borderColor = 'rgb(255, 199, 0)';
