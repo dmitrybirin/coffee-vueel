@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import Chart from './components/Chart.vue'
-import Description from './components/Description.vue'
-import wheel from './models/wheel';
+import Chart from './Chart.vue'
+import Description from './Description.vue'
+import wheel from '../models/wheel';
 
 export default {
   name: 'New',

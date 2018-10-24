@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import cup from '../models';
+import { cup } from '../models';
 export default {
     name: 'Description',
     data: () => ({
