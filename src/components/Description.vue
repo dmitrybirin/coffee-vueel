@@ -5,8 +5,8 @@
 				id="title"
 				placeholder="name your coffee"
 				type="text" 
-				@value="cup.title"
-				@input="e => cup.changeTitle(e.target.value)"
+                v-bind:value="cup.title"
+                v-on:input="onValueChange"
 			/>
 			<label for="title">Name your coffee</label>
 		</div>
@@ -16,17 +16,22 @@
 
 <script>
 import cup from '../models';
-
 export default {
     name: 'Description',
     data: () => ({
-		cup
+        cup
     }),
     methods: {
         sendCup: () => {
-            cup.changeDate(new Date().toISOString().slice(0, 19).replace('T', ' '))
-            cup.send()
-        }
+            cup.changeDate(
+                new Date()
+                    .toISOString()
+                    .slice(0, 19)
+                    .replace('T', ' ')
+            );
+            cup.send();
+        },
+        onValueChange: e => cup.changeTitle(e.target.value)
     }
 };
 </script>
@@ -76,18 +81,18 @@ button {
     justify-content: center;
     min-height: 32px;
     min-width: 32px;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     text-align: center;
     cursor: pointer;
     outline: none;
     border-radius: 5px;
     background-color: rgb(255, 199, 0.8);
     border: 'none';
-	color: black;
-	border-radius: 10%;
+    color: black;
+    border-radius: 10%;
 }
 
 button:hover {
-	opacity: 0.6;
+    opacity: 0.6;
 }
 </style>
