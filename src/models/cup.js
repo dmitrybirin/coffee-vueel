@@ -1,4 +1,6 @@
-import { types } from 'mobx-state-tree';
+
+import 'setimmediate'
+import { types, flow } from 'mobx-state-tree'
 import Wheel from './wheel'
 
 
@@ -39,23 +41,23 @@ const Cup = types.model({
 	loading: types.boolean,
 	wheel: Wheel,
 }).actions(self => ({
-	get: async () => {
-		const res = await request(serverEndpoint)
-		const data = await getData(res)
+	get: flow(function* get() {
+		const res = yield request(serverEndpoint)
+		const data = yield getData(res)
 		return data
-	},
-	send: async () => {
-		self.beginLoading()
-		const res = await request(`${serverEndpoint}/coffee`, {...postOptions, body: JSON.stringify(self)})
+	}),
+	send: flow(function* send() {
+		self.loading = true
+		const res = yield request(`${serverEndpoint}/coffee`, {...postOptions, body: JSON.stringify(self)})
 		if (res.status !== 204) {
-			self.endLoading()
+			self.loading = false
 			throw new Error(`Error while posting: status code was ${res.status} not 204`)
 		} 
 		if (res.status === 204) {
-			self.changeTitle('')
+			self.title = ''
 		}
-		self.endLoading()
-	},
+		self.loading = false
+	}),
 	changeTitle(newTitle) {
 		self.title = newTitle
 	},
@@ -65,12 +67,6 @@ const Cup = types.model({
 	changeDescription(newDesc) {
 		self.description = newDesc
 	},
-	beginLoading(){
-		self.loading = true
-	},
-	endLoading(){
-		self.loading = false
-	}
 }))
 
 export default Cup;
