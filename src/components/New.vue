@@ -1,7 +1,7 @@
 <template>
   <div id="container">
+	<h2>Coffee Wheel</h2>
     <div id="input-container">
-      <h1>Coffee Wheel</h1>
       <Description />
     </div>
     <Chart />
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
   font-size: 70px;
   display: flex;
@@ -40,7 +40,7 @@ h1 {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 
 div#input-container {

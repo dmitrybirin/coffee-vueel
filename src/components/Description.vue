@@ -37,10 +37,18 @@ export default {
 </script>
 
 <style scoped>
-div#container div#title-container {
+div#container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+div#title-container {
     display: flex;
     flex-direction: column;
     margin: 25px;
+    width: 20vw;
 }
 
 div#title-container {
@@ -90,6 +98,9 @@ button {
     border: 'none';
     color: black;
     border-radius: 10%;
+    width: 100px;
+    height: 50px;
+    margin-top: 25px;
 }
 
 button:hover {

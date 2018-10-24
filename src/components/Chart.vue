@@ -190,7 +190,6 @@ export default {
 <style scoped>
 div#container {
     position: relative;
-    height: 90vh;
-    width:80vw;
+    width:100vw;
 }
 </style>

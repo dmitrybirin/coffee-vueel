@@ -1,8 +1,10 @@
 <template>
     <div id='container'>
-		<h1>Welcome back</h1>
-		<router-link to="/list">Go to List!</router-link>
-		<router-link to="/new">Create New</router-link>	
+		<div id='nav'>
+			<h1>Welcome back</h1>
+			<router-link to="/list">Go to List!</router-link>
+			<router-link to="/new">Create New</router-link>	
+		</div>
 		<router-view></router-view>
     </div>
 </template>
@@ -23,9 +25,28 @@ export default {
 </script>
 
 <style scoped>
-div#container h1,
+div#nav {
+	background-color: #fff5ea;
+}
+
+div#nav h1,
 h3 {
-    margin: 10px;
+    margin: 0px;
+}
+
+div#nav a {
+    color:black;
+    text-align: center;
+	padding:  14px 25px;
+    text-decoration: none;
+}
+
+div#nav a:hover {
+    color:gray;
+}
+
+h1 {
+  margin-top: 20px;
 }
 
 ul {
