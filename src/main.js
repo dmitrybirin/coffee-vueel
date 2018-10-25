@@ -13,6 +13,7 @@ const routes = [
   { path: '/new', component: New }
 ]
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
