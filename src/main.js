@@ -1,21 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
+import router from './router'
+
 import App from './App.vue'
-import List from './components/List'
-import New from './components/New'
-
-Vue.use(VueRouter)
-
-const routes = [
-  { path: '/list', component: List },
-  { path: '/new', component: New }
-]
-const router = new VueRouter({
-  mode: 'history',
-  routes
-})
 
 Vue.config.productionTip = false
 
