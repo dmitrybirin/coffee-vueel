@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "EventEmitter": "^1.0.0",
+    "auth0-js": "^9.8.1",
     "chart.js": "^2.7.2",
     "mobx": "^5.5.0",
     "mobx-state-tree": "^3.5.0",

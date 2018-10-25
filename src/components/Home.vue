@@ -4,6 +4,8 @@
 			<h1>Welcome back</h1>
 			<router-link to="/list">Go to List!</router-link>
 			<router-link to="/new">Create New</router-link>	
+            <a href="javascript:;" v-if="authenticated" @click="logout()">Log out</a>
+            <a href="javascript:;" v-else @click="login()">Log in</a>
 		</div>
 		<router-view></router-view>
     </div>
@@ -11,16 +13,34 @@
 
 <script>
 import { cups } from '../models'
+import auth  from '../auth/AuthService'
+
+const { login, logout, authenticated, authNotifier } = auth
 
 export default {
 	name: 'Home',
-  components: {
-  },
-    data: () => ({ cups }),
-	mounted() {
-		cups.getList()
+    // data: () => ({ cups, auth, authenticated }),
+      data () {
+    authNotifier.on('authChange', authState => {
+      this.authenticated = authState.authenticated
+    })
+    return {
+    cups,
+      auth,
+      authenticated
     }
-
+  },
+	mounted() {
+        cups.getList()
+        // this.listenToAuth()
+    },
+    methods: {
+        login,
+        logout,
+        // listenToAuth: () => authNotifier.on('authChange', function (authState){
+        //         this.authenticated = authState.authenticated
+        // })
+  }
 };
 </script>
 
