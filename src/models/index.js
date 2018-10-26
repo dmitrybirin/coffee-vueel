@@ -3,6 +3,7 @@ import uuidv4 from 'uuid/v4';
 import Wheel from './wheel'
 import Cup from './cup'
 import CupList from './cuplist'
+import Auth from './auth'
 
 const cup = Cup.create({
 	id: uuidv4(),
@@ -34,4 +35,9 @@ const cups = CupList.create({
 	items:[]
 })
 
-export { cup, cups }
+const auth = Auth.create({
+	authenticated: false,
+	userName: ''
+})
+
+export { cup, cups, auth }

@@ -1,46 +1,27 @@
 <template>
     <div id='container'>
 		<div id='nav'>
-			<h1>Welcome back</h1>
+			<h2>Welcome back</h2>
+            <h3 v-if="auth.userName">{{auth.userName}}</h3>
 			<router-link to="/list">Go to List!</router-link>
 			<router-link to="/new">Create New</router-link>	
-            <a href="javascript:;" v-if="authenticated" @click="logout()">Log out</a>
-            <a href="javascript:;" v-else @click="login()">Log in</a>
+            <a href="javascript:;" v-if="auth.authenticated" @click="auth.logout()">Log out</a>
+            <a href="javascript:;" v-else @click="auth.login()">Log in</a>
 		</div>
 		<router-view></router-view>
     </div>
 </template>
 
 <script>
-import { cups } from '../models'
-import auth  from '../auth/AuthService'
-
-const { login, logout, authenticated, authNotifier } = auth
+import { cups, auth } from '../models'
 
 export default {
 	name: 'Home',
-    // data: () => ({ cups, auth, authenticated }),
-      data () {
-    authNotifier.on('authChange', authState => {
-      this.authenticated = authState.authenticated
-    })
-    return {
-    cups,
-      auth,
-      authenticated
-    }
-  },
+    data: () => ({ cups, auth }),
 	mounted() {
         cups.getList()
-        // this.listenToAuth()
+        auth.rehydrate()
     },
-    methods: {
-        login,
-        logout,
-        // listenToAuth: () => authNotifier.on('authChange', function (authState){
-        //         this.authenticated = authState.authenticated
-        // })
-  }
 };
 </script>
 
@@ -67,6 +48,10 @@ div#nav a:hover {
 
 h1 {
   margin-top: 20px;
+}
+
+h3 {
+    margin: 15px;
 }
 
 ul {

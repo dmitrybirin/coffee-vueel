@@ -3,12 +3,11 @@
 </template>
 
 <script>
-import auth from '../auth/AuthService'
+import {auth}  from '../models'
 export default {
     name: 'callback',
     mounted(){
-	    console.log('callback!')
-      auth.handleAuthentication()
+      auth.handleAuth()
     }
 
   }
