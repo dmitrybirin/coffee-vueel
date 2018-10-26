@@ -11,41 +11,40 @@
 <script>
 import Chart from './Chart.vue'
 import Description from './Description.vue'
-import wheel from '../models/wheel';
+import wheel from '../models/wheel'
 
 export default {
-  name: 'New',
-  components: {
-    Chart,
-    Description,
-  },
-  data: () => ({
-    wheel
-  })
+	name: 'New',
+	components: {
+		Chart,
+		Description,
+	},
+	data: () => ({
+		wheel,
+	}),
 }
 </script>
 
 <style scoped>
 h1 {
-  font-size: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+	font-size: 70px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 #container {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Avenir', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 10px;
 }
 
 div#input-container {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
-
 </style>

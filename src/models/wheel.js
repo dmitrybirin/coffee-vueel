@@ -19,7 +19,7 @@ const Wheel = types.model({
 		'linger/finish': types.number 
 }).actions(self => ({
 	changeItem(name, value){
-		self[name] = value;
+		self[name] = value
 	}
 }))
 

@@ -10,17 +10,16 @@
 <script>
 import { cups } from '../models'
 export default {
-    name: 'List',
-    data: () => ({ cups }),
+	name: 'List',
+	data: () => ({ cups }),
 	mounted() {
 		cups.getList()
-    }
-
-};
+	},
+}
 </script>
 
 <style scoped>
 ul {
-    list-style: none;
+	list-style: none;
 }
 </style>
