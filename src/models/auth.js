@@ -44,7 +44,6 @@ const Auth = types
 			}
 		}),
 		getUser: flow(function* getUser() {
-			console.log('gettgin user')
 			if (!self.accessToken) return
 			try {
 				const response = yield authZero.getUserInfo(self.accessToken)
