@@ -30,9 +30,9 @@ export default {
 						.slice(0, 19)
 						.replace('T', ' ')
 				)
-				cup.send()
+				cup.send(auth.user.id)
 			} else {
-				throw new Error('Cannot send with authentificated user')
+				throw new Error('Cannot send with unauthentificated user')
 			}
 		},
 		onValueChange: e => cup.changeTitle(e.target.value),

@@ -13,7 +13,7 @@ export default {
 	name: 'List',
 	data: () => ({ cups }),
 	mounted() {
-		if (auth.user.id) cups.getList(auth.user.id)
+		if (auth.user) cups.getList(auth.user.id)
 	},
 }
 </script>
