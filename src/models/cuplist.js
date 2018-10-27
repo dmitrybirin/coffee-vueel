@@ -9,14 +9,10 @@ const CupList = types
 		items: types.array(Cup),
 	})
 	.actions(self => ({
-		getList: flow(function* getList(id) {
-			if (id) {
-				const res = yield request(`/coffee?id=${id}`)
+		getList: flow(function* getList() {
+				const res = yield request(`/coffee`)
 				const data = yield getData(res)
 				self.items = data.map(cup => ({ ...cup, loading: false, id: String(cup.id) }))
-			} else {
-				throw new Error('Cannot get list without user id')
-			}
 		}),
 		reset() {
 			self.items = []
