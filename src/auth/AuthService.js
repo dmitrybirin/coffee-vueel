@@ -14,6 +14,19 @@ class AuthService {
 
 	login = () => {
 		this.auth0.authorize()
+		
+	}
+
+	signUp = (email, password, data) => {
+		this.auth0.signup({
+            connection: 'Username-Password-Authentication',
+            email,
+            password,
+            user_metadata: data
+        }, (err) => {
+            if (err) return alert('Something went wrong: ' + err.message);
+            return alert('success signup without login!')
+        });
 	}
 
 	handleAuthentication = () =>
