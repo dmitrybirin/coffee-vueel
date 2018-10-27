@@ -3,4 +3,5 @@ export const AUTH_CONFIG = {
 	domain: 'cofferver.eu.auth0.com',
 	callbackUrl: 'http://localhost:8080/callback',
 	apiUrl: 'https://api.coffeewheel.xyz',
+	returnUrl:'http://localhost:8080',
 }

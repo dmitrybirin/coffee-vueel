@@ -36,7 +36,7 @@ const Auth = types
 		handleAuth: flow(function* handleAuth() {
 			try {
 				yield authZero.handleAuthentication()
-				router.push('/')
+				router.push('/new')
 				self.authenticated = true
 			} catch (err) {
 				self.authenticated = false
@@ -62,8 +62,6 @@ const Auth = types
 			if (self.authenticated) {
 				self.accessToken = yield getItemAsync('access_token')
 				yield self.getUser()
-			} else {
-				authZero.logout()
 			}
 		}),
 	}))
