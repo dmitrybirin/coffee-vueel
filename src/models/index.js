@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4';
+import { onAction } from 'mobx-state-tree'
 
 import Wheel from './wheel'
 import Cup from './cup'
@@ -37,7 +38,14 @@ const cups = CupList.create({
 
 const auth = Auth.create({
 	authenticated: false,
-	userName: ''
+	accessToken: null
+})
+
+onAction(auth, call => {
+	if(call.name === 'logout') {
+		cup.reset()
+		cups.reset()
+	}
 })
 
 export { cup, cups, auth }

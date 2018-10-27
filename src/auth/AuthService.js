@@ -13,7 +13,7 @@ class AuthService {
 	}
 
 	login = () => {
-    this.auth0.authorize()
+		this.auth0.authorize()
 	}
 
 	handleAuthentication = () =>
@@ -26,6 +26,13 @@ class AuthService {
 				}
 			})
 		})
+		
+	getUserInfo = (accessToken) => new Promise((res,rej) =>
+		this.auth0.client.userInfo(accessToken, (err, profile) => {
+			if (err) rej(err)
+			if (profile) res(profile)
+		  })
+	)
 
 	setSession = authResult => {
 		let expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime())

@@ -2,9 +2,9 @@
     <div id='container'>
 		<div id='nav'>
 			<h2>Welcome back</h2>
-            <h3 v-if="auth.userName">{{auth.userName}}</h3>
-			<router-link to="/list">Go to List!</router-link>
-			<router-link to="/new">Create New</router-link>	
+            <h3 v-if="auth.user">{{auth.user.nickname}}</h3>
+			<router-link v-if="auth.user" to="/list">Go to List!</router-link>
+			<router-link v-if="auth.user" to="/new">Create New</router-link>	
             <a href="javascript:;" v-if="auth.authenticated" @click="auth.logout()">Log out</a>
             <a href="javascript:;" v-else @click="auth.login()">Log in</a>
 		</div>
@@ -19,7 +19,6 @@ export default {
 	name: 'Home',
 	data: () => ({ cups, auth }),
 	mounted() {
-		cups.getList()
 		auth.rehydrate()
 	},
 }

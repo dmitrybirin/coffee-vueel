@@ -1,6 +1,7 @@
 import 'setimmediate'
 import { types, flow } from 'mobx-state-tree'
 import AuthService from '../auth/AuthService'
+import User from './user'
 import router from '../router'
 
 const authZero = new AuthService()
@@ -18,9 +19,20 @@ const getItemAsync = async (key, count = 0) => {
 const Auth = types
 	.model({
 		authenticated: types.boolean,
-		userName: types.string,
+		accessToken: types.maybeNull(types.string),
+		user: types.maybe(User),
 	})
 	.actions(self => ({
+		login() {
+			authZero.login()
+		},
+		logout() {
+			authZero.logout()
+			self.authenticated = false
+			self.user = undefined
+			self.accessToken = ''
+			router.push('/')
+		},
 		handleAuth: flow(function* handleAuth() {
 			try {
 				yield authZero.handleAuthentication()
@@ -31,40 +43,30 @@ const Auth = types
 				router.push('/')
 			}
 		}),
-		changeAuthenticated(value) {
-			self.authenticated = value
-		},
-		changeUser(name) {
-			self.userName = name
-		},
-		login() {
-			authZero.login()
-		},
-		logout() {
-			authZero.logout()
-			self.authenticated = false
-			self.userName = ''
-			router.push('/')
-		},
-		async isAuthenticated() {
+		getUser: flow(function* getUser() {
+			console.log('gettgin user')
+			if (!self.accessToken) return
 			try {
-				return new Date().getTime() < JSON.parse(await getItemAsync('expires_at'))
+				const response = yield authZero.getUserInfo(self.accessToken)
+				self.user = User.create({
+					sub: response.sub,
+					email: response.name,
+					nickname: response.nickname,
+					picture: response.picture,
+				})
 			} catch (err) {
-				return false
+				console.error(`Error while getting the User: ${err}`)
 			}
-		},
-		async getUser() {
-			try {
-				const res = await getItemAsync('userName')
-				return res
-			} catch (err) {
-				return ''
+		}),
+		rehydrate: flow(function* rehydrate() {
+			self.authenticated = new Date().getTime() < JSON.parse(yield getItemAsync('expires_at'))
+			if (self.authenticated) {
+				self.accessToken = yield getItemAsync('access_token')
+				yield self.getUser()
+			} else {
+				authZero.logout()
 			}
-		},
-		async rehydrate() {
-			self.changeUser(await self.getUser())
-			self.changeAuthenticated(await self.isAuthenticated())
-		},
+		}),
 	}))
 
 export default Auth
