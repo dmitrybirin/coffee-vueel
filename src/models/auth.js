@@ -6,9 +6,9 @@ import router from '../router'
 const authZero = new AuthService()
 
 const getItemAsync = async (key, count = 0) => {
-	if (count > 9) throw new Error(`Cannot get the item '${key}'`)
+	if (count > 9) return null
 	else if (!localStorage.getItem(key)) {
-		await new Promise(res => setTimeout(res, 100))
+		await new Promise(res => setTimeout(res, 50))
 		count += 1
 		await getItemAsync(key, count)
 	}
