@@ -1,26 +1,23 @@
 <template>
-  <div id="app">
-    <Home/>
-    <!-- <div id="input-container"> -->
-      <!-- <h1>Coffee Wheel</h1> -->
-      <!-- <Description /> -->
-    <!-- </div> -->
-    <!-- <Chart /> -->
+  <div id="container">
+	<h2>Coffee Wheel</h2>
+    <div id="input-container">
+      <Description />
+    </div>
+    <Chart />
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
-import Chart from './components/Chart.vue'
-import Description from './components/Description.vue'
-import wheel from './models/wheel'
+import Chart from './Chart.vue'
+import Description from './Description.vue'
+import wheel from '../models/wheel'
 
 export default {
-	name: 'app',
+	name: 'New',
 	components: {
 		Chart,
 		Description,
-		Home,
 	},
 	data: () => ({
 		wheel,
@@ -28,14 +25,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
 	font-size: 70px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-#app {
+#container {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -43,6 +40,7 @@ h1 {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
+	margin-top: 10px;
 }
 
 div#input-container {
