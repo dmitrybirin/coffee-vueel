@@ -13,13 +13,13 @@ const Cup = types
 		wheel: types.maybe(Wheel),
 	})
 	.actions(self => ({
-		send: flow(function* send(id) {
+		send: flow(function* send() {
 			self.loading = true
 			const res = yield request(`/coffee`, {
 				method: 'POST',
 				mode: 'cors',
 				credentials: 'same-origin',
-				body: JSON.stringify({ ...self, user_id: id }),
+				body: JSON.stringify(self),
 			})
 			if (res.status !== 204) {
 				self.loading = false

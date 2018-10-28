@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { cup, auth } from '../models'
+import { cup } from '../models'
 export default {
 	name: 'Description',
 	data: () => ({
@@ -23,7 +23,6 @@ export default {
 	}),
 	methods: {
 		sendCup: () => {
-			if (auth.user) {
 				cup.changeDate(
 					new Date()
 						.toISOString()
@@ -31,9 +30,6 @@ export default {
 						.replace('T', ' ')
 				)
 				cup.send()
-			} else {
-				throw new Error('Cannot send with authentificated user')
-			}
 		},
 		onValueChange: e => cup.changeTitle(e.target.value),
 	},

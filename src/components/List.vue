@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import { cups, auth } from '../models'
+import { cups } from '../models'
 export default {
 	name: 'List',
 	data: () => ({ cups }),
 	mounted() {
-		if (auth.user.id) cups.getList(auth.user.id)
+		cups.getList()
 	},
 }
 </script>

@@ -14,7 +14,6 @@ class AuthService {
 
 	login = () => {
 		this.auth0.authorize()
-		
 	}
 
 	signUp = (email, password, data) => {
@@ -64,6 +63,7 @@ class AuthService {
 		localStorage.removeItem('id_token')
 		localStorage.removeItem('expires_at')
 		localStorage.removeItem('userName')
+		this.auth0.logout({returnTo:AUTH_CONFIG.returnUrl})
 	}
 }
 

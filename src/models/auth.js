@@ -3,18 +3,9 @@ import { types, flow } from 'mobx-state-tree'
 import AuthService from '../auth/AuthService'
 import User from './user'
 import router from '../router'
+import { getItemAsync } from '../helpers'
 
 const authZero = new AuthService()
-
-const getItemAsync = async (key, count = 0) => {
-	if (count > 9) return null
-	else if (!localStorage.getItem(key)) {
-		await new Promise(res => setTimeout(res, 50))
-		count += 1
-		await getItemAsync(key, count)
-	}
-	return localStorage.getItem(key)
-}
 
 const Auth = types
 	.model({
@@ -36,7 +27,7 @@ const Auth = types
 		handleAuth: flow(function* handleAuth() {
 			try {
 				yield authZero.handleAuthentication()
-				router.push('/')
+				router.push('/new')
 				self.authenticated = true
 			} catch (err) {
 				self.authenticated = false
@@ -62,8 +53,6 @@ const Auth = types
 			if (self.authenticated) {
 				self.accessToken = yield getItemAsync('access_token')
 				yield self.getUser()
-			} else {
-				authZero.logout()
 			}
 		}),
 	}))

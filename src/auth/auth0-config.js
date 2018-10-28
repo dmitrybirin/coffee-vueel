@@ -6,4 +6,5 @@ export const AUTH_CONFIG = {
 			? 'https://localhost:8080/callback'
 			: 'https://coffeewheel.xyz/callback',
 	apiUrl: 'https://api.coffeewheel.xyz',
+	returnUrl:'http://localhost:8080',
 }
