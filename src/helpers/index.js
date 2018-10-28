@@ -8,7 +8,7 @@ export const request = async (relativeUrl, options) => {
 		'Authorization': `Bearer ${idToken}`,
 	})
 	try {
-		const res = await window.fetch(`${serverEndpoint}${relativeUrl}`, { headers, ...options })
+		const res = await window.fetch(`${serverEndpoint}${relativeUrl}`, { headers, mode: 'cors', ...options })
 		return res
 	} catch (err) {
 		throw new Error('Error while fetching:\n', err.message)
