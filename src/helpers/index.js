@@ -1,4 +1,4 @@
-const serverEndpoint = process.env.API_ENDPOINT
+const serverEndpoint = process.env.VUE_APP_API_ENDPOINT
 
 export const request = async (relativeUrl, options) => {
 	const idToken = await getItemAsync('id_token')
