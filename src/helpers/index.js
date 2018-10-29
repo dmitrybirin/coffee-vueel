@@ -1,14 +1,17 @@
-const serverEndpoint =
-	process.env.NODE_ENV === 'dev' ? 'http://localhost:3000' : 'https://api.coffeewheel.xyz'
+const serverEndpoint = process.env.API_ENDPOINT
 
 export const request = async (relativeUrl, options) => {
 	const idToken = await getItemAsync('id_token')
 	const headers = new Headers({
 		'Content-Type': 'application/json; charset=utf-8',
-		'Authorization': `Bearer ${idToken}`,
+		Authorization: `Bearer ${idToken}`,
 	})
 	try {
-		const res = await window.fetch(`${serverEndpoint}${relativeUrl}`, { headers, mode: 'cors', ...options })
+		const res = await window.fetch(`${serverEndpoint}${relativeUrl}`, {
+			headers,
+			mode: 'cors',
+			...options,
+		})
 		return res
 	} catch (err) {
 		throw new Error('Error while fetching:\n', err.message)
