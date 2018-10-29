@@ -3,7 +3,7 @@
     <Home/>
     <!-- <div id="input-container"> -->
       <!-- <h1>Coffee Wheel</h1> -->
-      <!-- <Description /> -->
+      <!-- <Form /> -->
     <!-- </div> -->
     <!-- <Chart /> -->
   </div>
@@ -12,14 +12,14 @@
 <script>
 import Home from './components/Home.vue'
 import Chart from './components/Chart.vue'
-import Description from './components/Description.vue'
+import Form from './components/Form.vue'
 import wheel from './models/wheel'
 
 export default {
 	name: 'app',
 	components: {
 		Chart,
-		Description,
+		Form,
 		Home,
 	},
 	data: () => ({
