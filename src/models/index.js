@@ -18,24 +18,23 @@ const cup = Cup.create({
 	wheel: Wheel.create({
 		id: uuidv4(),
 		/* eslint-disable */
-		sweet: 1,
+		'sweet': 1,
 		'sour/tart': 1,
-		floral: 1,
-		spicy: 1,
-		salty: 1,
+		'floral': 1,
+		'spicy': 1,
+		'salty': 1,
 		'berry fruit': 1,
 		'citrus fruit': 1,
 		'stone fruit': 1,
-		chocolate: 1,
-		caramel: 1,
-		smoky: 1,
-		bitter: 1,
-		savory: 1,
-		body: 1,
-		clean: 1,
-		'linger/finish': 1,
-	}),
-	/* eslint-enable */
+		'chocolate': 1,
+		'caramel': 1,
+		'smoky': 1,
+		'bitter': 1,
+		'savory': 1,
+		'body': 1,
+		'clean': 1,
+		'linger/finish': 1 })
+		/* eslint-enable */
 })
 
 const cups = CupList.create({
