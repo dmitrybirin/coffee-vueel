@@ -10,9 +10,9 @@ const CupList = types
 	})
 	.actions(self => ({
 		getList: flow(function* getList() {
-				const res = yield request(`/coffee`)
-				const data = yield getData(res)
-				self.items = data.map(cup => ({ ...cup, loading: false, id: String(cup.id) }))
+			const res = yield request(`/coffee`)
+			const data = yield getData(res)
+			self.items = data.map(cup => ({ ...cup, loading: false, id: String(cup.id) }))
 		}),
 		reset() {
 			self.items = []
