@@ -26,7 +26,7 @@ const Cup = types
 				throw new Error(`Error while posting: status code was ${res.status} not 204`)
 			}
 			if (res.status === 204) {
-				self.title = ''
+				self.reset()
 			}
 			self.loading = false
 		}),
@@ -43,6 +43,7 @@ const Cup = types
 			self.title = ''
 			self.description = ''
 			self.loading = false
+			self.wheel.reset()
 		},
 	}))
 

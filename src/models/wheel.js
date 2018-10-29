@@ -1,6 +1,8 @@
-import { types } from 'mobx-state-tree';
+import { types } from 'mobx-state-tree'
 
-const Wheel = types.model({
+const Wheel = types
+	.model({
+		/* eslint-disable */
 		'sweet': types.number,
 		'sour/tart': types.number,
 		'floral': types.number,
@@ -17,10 +19,17 @@ const Wheel = types.model({
 		'body': types.number,
 		'clean': types.number,
 		'linger/finish': types.number 
-}).actions(self => ({
-	changeItem(name, value){
-		self[name] = value
-	}
-}))
+		/* eslint-enable */
+	})
+	.actions(self => ({
+		changeItem(name, value) {
+			self[name] = value
+		},
+		reset() {
+			for (let key of Object.keys(self.toJSON())) {
+				self[key] = 1
+			}
+		},
+	}))
 
-export default Wheel;
+export default Wheel
