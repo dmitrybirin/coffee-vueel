@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4';
+import uuidv4 from 'uuid/v4'
 import { onAction } from 'mobx-state-tree'
 
 import Wheel from './wheel'
@@ -8,12 +8,16 @@ import Auth from './auth'
 
 const cup = Cup.create({
 	id: uuidv4(),
-	title:'',
-	timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
-	description:'',
+	title: '',
+	timestamp: new Date()
+		.toISOString()
+		.slice(0, 19)
+		.replace('T', ' '),
+	description: '',
 	loading: false,
-	wheel: Wheel.create({ 
+	wheel: Wheel.create({
 		id: uuidv4(),
+		/* eslint-disable */
 		'sweet': 1,
 		'sour/tart': 1,
 		'floral': 1,
@@ -30,19 +34,20 @@ const cup = Cup.create({
 		'body': 1,
 		'clean': 1,
 		'linger/finish': 1 })
+		/* eslint-enable */
 })
 
 const cups = CupList.create({
-	items:[]
+	items: [],
 })
 
 const auth = Auth.create({
 	authenticated: false,
-	accessToken: null
+	accessToken: null,
 })
 
 onAction(auth, call => {
-	if(call.name === 'logout') {
+	if (call.name === 'logout') {
 		cup.reset()
 		cups.reset()
 	}

@@ -27,6 +27,7 @@ const Auth = types
 		handleAuth: flow(function* handleAuth() {
 			try {
 				yield authZero.handleAuthentication()
+				yield self.rehydrate()
 				router.push('/new')
 				self.authenticated = true
 			} catch (err) {
@@ -38,12 +39,12 @@ const Auth = types
 			if (!self.accessToken) return
 			try {
 				const response = yield authZero.getUserInfo(self.accessToken)
-				self.user = User.create({
+				return {
 					sub: response.sub,
 					email: response.name,
 					nickname: response.nickname,
 					picture: response.picture,
-				})
+				}
 			} catch (err) {
 				console.error(`Error while getting the User: ${err}`)
 			}
@@ -52,7 +53,14 @@ const Auth = types
 			self.authenticated = new Date().getTime() < JSON.parse(yield getItemAsync('expires_at'))
 			if (self.authenticated) {
 				self.accessToken = yield getItemAsync('access_token')
-				yield self.getUser()
+				let user = JSON.parse(yield getItemAsync('user'))
+				if (!user) {
+					user = yield self.getUser()
+					localStorage.setItem('user', JSON.stringify(user))
+				}
+				self.user = User.create({
+					...user,
+				})
 			}
 		}),
 	}))

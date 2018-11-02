@@ -2,7 +2,7 @@
   <div id="container">
 	<h2>Coffee Wheel</h2>
     <div id="input-container">
-      <Description />
+      <Form />
     </div>
     <Chart />
   </div>
@@ -10,14 +10,14 @@
 
 <script>
 import Chart from './Chart.vue'
-import Description from './Description.vue'
+import Form from './Form.vue'
 import wheel from '../models/wheel'
 
 export default {
 	name: 'New',
 	components: {
 		Chart,
-		Description,
+		Form,
 	},
 	data: () => ({
 		wheel,

@@ -17,7 +17,7 @@
 <script>
 import { cup } from '../models'
 export default {
-	name: 'Description',
+	name: 'Form',
 	data: () => ({
 		cup,
 	}),
