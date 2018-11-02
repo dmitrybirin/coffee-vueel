@@ -27,6 +27,7 @@ const Auth = types
 		handleAuth: flow(function* handleAuth() {
 			try {
 				yield authZero.handleAuthentication()
+				yield self.rehydrate()
 				router.push('/new')
 				self.authenticated = true
 			} catch (err) {
