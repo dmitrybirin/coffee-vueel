@@ -57,18 +57,13 @@ class AuthService {
 		localStorage.setItem('access_token', authResult.accessToken)
 		localStorage.setItem('id_token', authResult.idToken)
 		localStorage.setItem('expires_at', expiresAt)
-		localStorage.setItem(
-			'userName',
-			(authResult && authResult.idTokenPayload && authResult.idTokenPayload.nickname) ||
-				'stranger'
-		)
 	}
 
 	logout() {
 		localStorage.removeItem('access_token')
 		localStorage.removeItem('id_token')
 		localStorage.removeItem('expires_at')
-		localStorage.removeItem('userName')
+		localStorage.removeItem('user')
 		this.auth0.logout({ returnTo: AUTH_CONFIG.returnUrl })
 	}
 }
