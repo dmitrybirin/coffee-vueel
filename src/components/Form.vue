@@ -23,13 +23,13 @@ export default {
 	}),
 	methods: {
 		sendCup: () => {
-				cup.changeDate(
-					new Date()
-						.toISOString()
-						.slice(0, 19)
-						.replace('T', ' ')
-				)
-				cup.send()
+			cup.changeDate(
+				new Date()
+					.toISOString()
+					.slice(0, 19)
+					.replace('T', ' ')
+			)
+			cup.send()
 		},
 		onValueChange: e => cup.changeTitle(e.target.value),
 	},
