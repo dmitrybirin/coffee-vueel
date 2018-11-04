@@ -1,17 +1,40 @@
 <template>
-    <div id='container'>
-		<div id="title-container">
-			<input 
+<div id="container">
+
+	<el-row type="flex" justify="start">
+		<el-col :span="8">
+			<span class="input-label">Coffee name</span>
+		</el-col>
+		<el-col :span="16">
+			<el-input 
 				id="title"
-				placeholder="name your coffee"
+				placeholder="Kenya from Rōst"
 				type="text" 
-                v-bind:value="cup.title"
-                v-on:input="onValueChange"
-			/>
-			<label for="title">Name your coffee</label>
-		</div>
-		<button @click="this.sendCup">Send!</button>
-    </div>
+				v-bind:value="cup.title"
+				v-on:input="onNameChange"
+			>
+			</el-input>
+		</el-col>
+	</el-row>
+
+	<el-row type="flex" justify="start">
+		<el-col :span="8">
+			<span class="input-label">Description</span>
+		</el-col>
+		<el-col :span="16">
+			<el-input 
+				placeholder="Easy-peasy lemon squesy"
+				type="textarea" 
+				v-bind:value="cup.description"
+				v-on:input="onDescriptionChange"
+			>
+			</el-input>
+		</el-col>
+	</el-row>
+	<el-row :span="4" type="flex" justify="center">	
+		<el-button @click="this.sendCup">Send!</el-button>
+	</el-row>	
+</div>
 </template>
 
 <script>
@@ -31,79 +54,18 @@ export default {
 			)
 			cup.send()
 		},
-		onValueChange: e => cup.changeTitle(e.target.value),
+		onNameChange: value => cup.changeTitle(value),
+		onDescriptionChange: value => cup.changeDescription(value),
 	},
 }
 </script>
 
-<style scoped>
+<style scoped lang="css">
 div#container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+	margin-top: 200px;
 }
-
-div#title-container {
-	display: flex;
-	flex-direction: column;
-	margin: 25px;
-	width: 20vw;
-}
-
-div#title-container {
-	position: relative;
-	padding-top: 2rem;
-}
-
-div#title-container label {
-	position: absolute;
-	top: 0;
-	font-size: var(--font-size-small);
-	opacity: 1;
-	transform: translateY(0);
-	transition: all 0.2s ease-out;
-	font-size: 20px;
-}
-
-input#title:placeholder-shown + label {
-	opacity: 0;
-	transform: translateY(1rem);
-}
-
-input#title::placeholder {
-	text-align: center;
-	font-size: 30px;
-	padding: 5px;
-	padding-top: 10px;
-}
-
-input#title {
-	border: 0;
-	height: 50px;
-	font-size: 30px;
-}
-
-button {
-	font-size: 14px;
-	justify-content: center;
-	min-height: 32px;
-	min-width: 32px;
-	transition: all 0.2s ease-in-out;
-	text-align: center;
-	cursor: pointer;
-	outline: none;
-	border-radius: 5px;
-	background-color: rgb(255, 199, 0.8);
-	border: 'none';
-	color: black;
-	border-radius: 10%;
-	width: 100px;
-	height: 50px;
+.el-row {
 	margin-top: 25px;
-}
-
-button:hover {
-	opacity: 0.6;
+	align-items: center;
 }
 </style>
