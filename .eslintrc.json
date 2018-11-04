@@ -1,6 +1,10 @@
 {
-	"parserOptions": { "ecmaVersion": 2018, "sourceType": "module" },
+	"root": true,
+	"env": {
+		"node": true
+	},
+	"parserOptions": { "parser": "babel-eslint", "ecmaVersion": 2018, "sourceType": "module" },
 	"plugins": ["prettier"],
-	"extends": ["plugin:prettier/recommended"],
-    "rules": { "prettier/prettier": "error" }
+	"extends": ["plugin:vue/essential", "eslint:recommended", "plugin:prettier/recommended"],
+	"rules": { "prettier/prettier": "error", "no-console":"off" }
 }

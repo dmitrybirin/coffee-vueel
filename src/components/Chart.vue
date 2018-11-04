@@ -186,6 +186,6 @@ export default {
 <style scoped>
 div#container {
 	position: relative;
-	width: 100vw;
+	height: 700px;
 }
 </style>

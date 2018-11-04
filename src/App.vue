@@ -1,52 +1,27 @@
 <template>
   <div id="app">
     <Home/>
-    <!-- <div id="input-container"> -->
-      <!-- <h1>Coffee Wheel</h1> -->
-      <!-- <Form /> -->
-    <!-- </div> -->
-    <!-- <Chart /> -->
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
-import Chart from './components/Chart.vue'
-import Form from './components/Form.vue'
-import wheel from './models/wheel'
+import Home from './components/Home'
 
 export default {
 	name: 'app',
 	components: {
-		Chart,
-		Form,
 		Home,
 	},
-	data: () => ({
-		wheel,
-	}),
 }
 </script>
 
 <style>
-h1 {
-	font-size: 70px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
 #app {
-	display: flex;
-	flex-direction: column;
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-}
-
-div#input-container {
-	display: flex;
-	flex-direction: column;
+	margin-top: 60px;
 }
 </style>

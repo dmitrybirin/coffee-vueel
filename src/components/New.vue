@@ -1,11 +1,8 @@
 <template>
-  <div id="container">
-	<h2>Coffee Wheel</h2>
-    <div id="input-container">
-      <Form />
-    </div>
-    <Chart />
-  </div>
+	<el-row type="flex" class="row-bg">
+		<el-col :span="8"><Form /></el-col>
+		<el-col :span="16"><Chart /></el-col>
+	</el-row>
 </template>
 
 <script>
@@ -25,26 +22,11 @@ export default {
 }
 </script>
 
-<style scoped>
-h1 {
-	font-size: 70px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-#container {
-	display: flex;
-	flex-direction: column;
-	font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 10px;
-}
-
-div#input-container {
-	display: flex;
-	flex-direction: column;
+<style scoped lang="css">
+.el-row {
+	margin-top: 40px;
 }
 </style>
+
+
+
